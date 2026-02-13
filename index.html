@@ -7,7 +7,7 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
-            --bg: #0f172a;
+            --bg: #070b14; /* Сделаем фон почти черным для проверки обновления */
             --card: rgba(30, 41, 59, 0.7);
             --accent-vilavi: #ef4444;
             --accent-work: #3b82f6;
@@ -43,6 +43,7 @@
 </head>
 <body>
     <div class="header"><h1>Майк: Прямое Управление</h1></div>
+    <div id="debug-log" style="font-size: 10px; color: #475569; background: rgba(0,0,0,0.3); padding: 5px; border-radius: 5px; max-height: 50px; overflow: scroll;">Ожидание событий...</div>
 
     <div class="tab-container">
         <div id="t-main" class="tab active" onclick="showTab('main')">🤖 ГЛАВНАЯ</div>
@@ -80,7 +81,7 @@
         }
 
         async function sendCommand(cmd, val) {
-            // Визуальный отклик
+            document.getElementById('debug-log').innerText = 'Нажатие: ' + cmd;
             tg.HapticFeedback.notificationOccurred('success');
             
             try {
