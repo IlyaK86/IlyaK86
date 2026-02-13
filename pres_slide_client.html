@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>VILAVI Client Bonus</title>
+    <style>
+        body { font-family: 'Inter', sans-serif; background: #020617; color: white; display:flex; justify-content:center; align-items:center; min-height:100vh; margin:0; }
+        .slide { width: 900px; height: 550px; background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); border-radius: 40px; padding: 40px; border: 1px solid rgba(255,255,255,0.1); position:relative; box-shadow: 0 50px 100px rgba(0,0,0,0.8); }
+        .nav-btn { position: absolute; top: 20px; left: 20px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; padding: 8px 15px; border-radius: 10px; cursor:pointer; }
+        
+        .header { text-align: left; border-left: 5px solid #3b82f6; padding-left: 20px; margin-bottom: 40px; }
+        .title { font-size: 32px; font-weight: 900; color: #3b82f6; text-transform: uppercase; letter-spacing: -1px; }
+
+        .content { display: flex; gap: 30px; }
+        .example-card { flex: 1; background: rgba(255,255,255,0.03); border-radius: 25px; padding: 25px; border: 1px solid rgba(59, 130, 246, 0.2); }
+        .info-card { flex: 1; display: flex; flex-direction: column; gap: 15px; }
+
+        .price-row { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 14px; color: #94a3b8; }
+        .price-val { color: white; font-weight: bold; }
+        
+        .result-box { background: #3b82f6; border-radius: 15px; padding: 20px; text-align: center; margin-top: 20px; }
+        .res-amount { font-size: 36px; font-weight: 900; }
+
+        .feature { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 15px; border-left: 4px solid #10b981; }
+        .feature b { color: #10b981; }
+    </style>
+</head>
+<body>
+    <button class="nav-btn" onclick="location.href='index.html'">🏠 ДОМОЙ</button>
+    <div class="slide">
+        <div class="header">
+            <div class="title">КЛИЕНТСКИЙ БОНУС</div>
+            <p style="color: #94a3b8">Твои быстрые деньги без построения структуры</p>
+        </div>
+
+        <div class="content">
+            <div class="example-card">
+                <div style="font-weight: 800; margin-bottom: 20px; font-size: 18px;">Пример: T8 EXTRA ⚡️</div>
+                <div class="price-row"><span>Цена клиента:</span> <span class="price-val">4 790 ₽</span></div>
+                <div class="price-row"><span>Кешбэк клиента (5%):</span> <span class="price-val">- 239,5 ₽</span></div>
+                <div class="price-row"><span>Бонус по продукту:</span> <span class="price-val">1 000 ₽</span></div>
+                
+                <div class="result-box">
+                    <div style="font-size: 12px; text-transform: uppercase;">Твой чистый доход:</div>
+                    <div class="res-amount">760,5 ₽</div>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <div class="feature">
+                    <b>МГНОВЕННО</b><br>
+                    <span style="font-size: 13px;">Если твой Личный Объем 100+ PV, бонус падает на счет стразу после оплаты.</span>
+                </div>
+                <div class="feature" style="border-left-color: #3b82f6;">
+                    <b>БЕЗ РЕГИСТРАЦИИ</b><br>
+                    <span style="font-size: 13px;">Клиент просто покупает по твоей ссылке или промокоду. Ты копишь баллы!</span>
+                </div>
+                <div class="feature" style="border-left-color: #f59e0b;">
+                    <b>СТАБИЛЬНОСТЬ</b><br>
+                    <span style="font-size: 13px;">Клиенты закрывают твою ежемесячную активность автоматически.</span>
+                </div>
+            </div>
+        </div>
+
+        <div style="position: absolute; bottom: 30px; right: 40px; font-size: 12px; color: #475569;">
+            Майк Коммерция | Твой путь к прибыли
+        </div>
+    </div>
+</body>
+</html>
