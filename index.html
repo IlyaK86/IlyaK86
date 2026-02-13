@@ -3,103 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mike Hub v2.5 | Direct API</title>
+    <title>Mike Hub v3.0 | Power Connection</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        :root {
-            --bg: #070b14; /* Сделаем фон почти черным для проверки обновления */
-            --card: rgba(30, 41, 59, 0.7);
-            --accent-vilavi: #ef4444;
-            --accent-work: #3b82f6;
-            --text: #f8fafc;
-        }
-        body {
-            font-family: 'Inter', -apple-system, sans-serif;
-            background: radial-gradient(circle at top, #1e293b, #0f172a);
-            color: var(--text);
-            margin: 0; padding: 16px; min-height: 100vh;
-            display: flex; flex-direction: column; gap: 16px;
-        }
-        .header h1 { font-size: 20px; text-align: center; margin: 10px 0; background: linear-gradient(to right, #60a5fa, #f87171); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        
-        .tab-container { display: flex; gap: 8px; margin-bottom: 5px; }
-        .tab { flex: 1; padding: 12px; border-radius: 12px; background: rgba(255,255,255,0.05); text-align: center; font-size: 13px; font-weight: bold; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); color: #94a3b8; }
-        .tab.active { background: var(--card); border-color: var(--accent-work); color: var(--accent-work); }
-        .tab.vilavi-active { border-color: var(--accent-vilavi); color: var(--accent-vilavi); }
-
-        .section { display: none; }
-        .section.active { display: flex; flex-direction: column; gap: 16px; }
-
-        .card { background: var(--card); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 16px; }
-        .label { font-size: 10px; font-weight: bold; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
-        
-        .btn-action { width: 100%; padding: 14px; border-radius: 12px; border: none; font-weight: bold; color: white; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 8px; cursor: pointer; transition: 0.2s; }
-        .btn-action:active { transform: scale(0.97); filter: brightness(1.2); }
-        .work { background: #2563eb; }
-        .vilavi { background: #dc2626; }
-        
-        .btn-small { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255,255,255,0.1); color: white; padding: 12px; border-radius: 12px; font-size: 12px; text-align: center; cursor: pointer; }
+        :root { --bg: #05080f; --card: rgba(30, 41, 59, 0.8); --accent: #ef4444; --text: #f8fafc; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 16px; display: flex; flex-direction: column; gap: 15px; }
+        .header h1 { font-size: 22px; text-align: center; background: linear-gradient(to right, #60a5fa, #f87171); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 10px 0; }
+        .card { background: var(--card); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .btn { width: 100%; padding: 16px; border-radius: 15px; border: none; font-weight: 800; color: white; cursor: pointer; transition: 0.2s; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
+        .btn:active { transform: scale(0.96); }
+        .btn-work { background: linear-gradient(135deg, #2563eb, #3b82f6); }
+        .btn-vilavi { background: linear-gradient(135deg, #dc2626, #ef4444); }
+        #status { font-size: 12px; text-align: center; color: #475569; margin-top: 10px; }
     </style>
 </head>
 <body>
-    <div class="header"><h1>Майк: Прямое Управление</h1></div>
-    <div id="debug-log" style="font-size: 10px; color: #475569; background: rgba(0,0,0,0.3); padding: 5px; border-radius: 5px; max-height: 50px; overflow: scroll;">Ожидание событий...</div>
-
-    <div class="tab-container">
-        <div id="t-main" class="tab active" onclick="showTab('main')">🤖 ГЛАВНАЯ</div>
-        <div id="t-vilavi" class="tab" onclick="showTab('vilavi')">🏆 VILAVI</div>
+    <div class="header"><h1>МАЙК: ЦЕНТР УПРАВЛЕНИЯ</h1></div>
+    
+    <div class="card">
+        <button class="btn btn-work" onclick="callMike('/context', 'work')">💼 Рабочий режим</button>
+        <button class="btn btn-vilavi" onclick="callMike('/action', 'vilavi_calc')">🏆 Проект VILAVI</button>
     </div>
 
-    <div id="s-main" class="section active">
-        <div class="card">
-            <div class="label">Режим ассистента</div>
-            <button class="btn-action work" onclick="sendCommand('/context', 'work')">💼 РАБОЧИЙ КОНТЕКСТ</button>
-            <button class="btn-action" style="background: #10b981" onclick="sendCommand('/context', 'personal')">🏠 ЛИЧНЫЙ КОНТЕКСТ</button>
-        </div>
-    </div>
-
-    <div id="s-vilavi" class="section">
-        <div class="card">
-            <div class="label">Маркетинг-инструменты</div>
-            <button class="btn-action vilavi" onclick="sendCommand('/action', 'vilavi_calc')">🧮 КАЛЬКУЛЯТОР ПРИБЫЛИ</button>
-            <button class="btn-action vilavi" onclick="sendCommand('/action', 'vilavi_pres')">📄 СОЗДАТЬ ПРЕЗЕНТАЦИЮ</button>
-        </div>
-    </div>
+    <div id="status">Система готова. Нажмите кнопку.</div>
 
     <script>
         const tg = window.Telegram.WebApp;
         tg.expand();
         tg.ready();
 
-        function showTab(tab) {
-            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active', 'vilavi-active'));
-            document.getElementById('s-' + tab).classList.add('active');
-            const el = document.getElementById('t-' + tab);
-            el.classList.add('active');
-            if(tab === 'vilavi') el.classList.add('vilavi-active');
-        }
+        async function callMike(cmd, val) {
+            const status = document.getElementById('status');
+            status.innerText = 'Связь с Майком...';
+            tg.HapticFeedback.impactOccurred('medium');
 
-        async function sendCommand(cmd, val) {
-            document.getElementById('debug-log').innerText = 'Нажатие: ' + cmd;
-            tg.HapticFeedback.notificationOccurred('success');
-            
+            // Мы используем прямой запрос к твоему n8n. 
+            // Чтобы избежать CORS, мы шлем запрос как plain text, n8n его поймет.
             try {
-                const response = await fetch('http://85.209.132.81:5678/webhook/mike-hub', {
+                await fetch('http://85.209.132.81:5678/webhook/mike-hub', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ command: cmd, value: val, userId: 351234035 })
+                    mode: 'no-cors',
+                    body: JSON.stringify({ command: cmd, value: val, user: 'Ilya' })
                 });
-                
-                if (response.ok) {
-                    tg.showAlert('Майк принял команду!');
-                } else {
-                    throw new Error('Ошибка связи');
-                }
+                status.innerText = '✅ Команда отправлена!';
+                setTimeout(() => { status.innerText = 'Готов к новым задачам'; }, 3000);
             } catch (e) {
-                // Если обычный fetch не прошел (блокировка CORS), пробуем через tg.sendData
-                tg.sendData(JSON.stringify({command: cmd, value: val}));
-                tg.showAlert('Сообщение отправлено боту!');
+                status.innerText = '❌ Ошибка сети';
             }
         }
     </script>
