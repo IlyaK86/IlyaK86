@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VILAVI Mentor | My Goals</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        :root { --bg: #05080f; --card: rgba(30, 41, 59, 0.8); --accent: #ef4444; --text: #f8fafc; --soft-blue: #3b82f6; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; }
+        .back-btn { background: rgba(255,255,255,0.1); border: none; color: white; padding: 8px 15px; border-radius: 10px; cursor: pointer; margin-bottom: 20px; font-size: 14px; }
+        .header { text-align: center; margin-bottom: 30px; }
+        .card { background: var(--card); border-radius: 20px; padding: 20px; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 20px; }
+        .label { font-size: 12px; text-transform: uppercase; color: #94a3b8; font-weight: bold; margin-bottom: 15px; display: block; }
+        textarea { width: 100%; height: 120px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); border-radius: 15px; color: white; padding: 15px; font-size: 15px; box-sizing: border-box; resize: none; }
+        .btn-mentor { width: 100%; background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: white; padding: 16px; border-radius: 15px; border: none; font-weight: 800; text-transform: uppercase; cursor: pointer; margin-top: 10px; }
+        .info-msg { font-size: 13px; color: #64748b; line-height: 1.5; margin-top: 15px; }
+    </style>
+</head>
+<body>
+    <button class="back-btn" onclick="window.location.href='index.html'">← В ХАБ</button>
+    
+    <div class="header">
+        <h2 style="margin:0">Наставник Майк 🧑‍🏫</h2>
+        <p style="font-size:12px; color:#94a3b8">Дорожная карта твоего развития</p>
+    </div>
+
+    <div class="card">
+        <span class="label">Опиши свои цели и возможности</span>
+        <textarea id="goal-input" placeholder="Например: Хочу заработать 50к за месяц, у меня есть 10 часов в неделю..."></textarea>
+        <button class="btn-mentor" onclick="getPlan()">РАССЧИТАТЬ СТРАТЕГИЮ</button>
+    </div>
+
+    <div class="card" style="background: rgba(239, 68, 68, 0.05); border-color: rgba(239, 68, 68, 0.2);">
+        <span class="label" style="color:#ef4444">Как это работает?</span>
+        <div class="info-msg">
+            Майк проанализирует твой запрос через математическую модель маркетинг-плана VILAVI и пришлет в Телеграм пошаговую инструкцию: сколько встреч провести и на какой вход закрывать партнеров.
+        </div>
+    </div>
+
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.expand();
+
+        async function getPlan() {
+            const goal = document.getElementById('goal-input').value;
+            if(!goal) return;
+            tg.HapticFeedback.notificationOccurred('success');
+            
+            // Отправляем сигнал в n8n
+            const img = new Image();
+            img.src = 'http://85.209.132.81:5678/webhook/mike-hub?command=strategy_request&value=' + encodeURIComponent(goal);
+            
+            tg.showAlert('Майк формирует стратегию! Ответ придет в чат через несколько секунд.');
+            document.getElementById('goal-input').value = '';
+        }
+    </script>
+</body>
+</html>
