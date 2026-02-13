@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mike Hub & VILAVI</title>
+    <title>Mike Hub v2.5 | Direct API</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
@@ -23,7 +23,7 @@
         .header h1 { font-size: 20px; text-align: center; margin: 10px 0; background: linear-gradient(to right, #60a5fa, #f87171); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
         .tab-container { display: flex; gap: 8px; margin-bottom: 5px; }
-        .tab { flex: 1; padding: 10px; border-radius: 12px; background: rgba(255,255,255,0.05); text-align: center; font-size: 13px; font-weight: bold; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); }
+        .tab { flex: 1; padding: 12px; border-radius: 12px; background: rgba(255,255,255,0.05); text-align: center; font-size: 13px; font-weight: bold; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); color: #94a3b8; }
         .tab.active { background: var(--card); border-color: var(--accent-work); color: var(--accent-work); }
         .tab.vilavi-active { border-color: var(--accent-vilavi); color: var(--accent-vilavi); }
 
@@ -34,75 +34,71 @@
         .label { font-size: 10px; font-weight: bold; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
         
         .btn-action { width: 100%; padding: 14px; border-radius: 12px; border: none; font-weight: bold; color: white; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 8px; cursor: pointer; transition: 0.2s; }
-        .btn-action:active { transform: scale(0.97); }
+        .btn-action:active { transform: scale(0.97); filter: brightness(1.2); }
         .work { background: #2563eb; }
         .vilavi { background: #dc2626; }
         
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .btn-small { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255,255,255,0.1); color: white; padding: 12px; border-radius: 12px; font-size: 12px; text-align: center; }
+        .btn-small { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255,255,255,0.1); color: white; padding: 12px; border-radius: 12px; font-size: 12px; text-align: center; cursor: pointer; }
     </style>
 </head>
 <body>
-    <div class="header"><h1>Майк: Хаб Управления</h1></div>
+    <div class="header"><h1>Майк: Прямое Управление</h1></div>
 
     <div class="tab-container">
         <div id="t-main" class="tab active" onclick="showTab('main')">🤖 ГЛАВНАЯ</div>
         <div id="t-vilavi" class="tab" onclick="showTab('vilavi')">🏆 VILAVI</div>
     </div>
 
-    <!-- ГЛАВНАЯ СЕКЦИЯ -->
     <div id="s-main" class="section active">
         <div class="card">
             <div class="label">Режим ассистента</div>
             <button class="btn-action work" onclick="sendCommand('/context', 'work')">💼 РАБОЧИЙ КОНТЕКСТ</button>
             <button class="btn-action" style="background: #10b981" onclick="sendCommand('/context', 'personal')">🏠 ЛИЧНЫЙ КОНТЕКСТ</button>
         </div>
-        <div class="label">Специалисты</div>
-        <div class="grid">
-            <button class="btn-small" onclick="sendCommand('/spawn', 'lawyer')">⚖️ ЮРИСТ</button>
-            <button class="btn-small" onclick="sendCommand('/spawn', 'analyst')">📈 АНАЛИТИК</button>
-        </div>
     </div>
 
-    <!-- VILAVI СЕКЦИЯ -->
     <div id="s-vilavi" class="section">
         <div class="card">
             <div class="label">Маркетинг-инструменты</div>
             <button class="btn-action vilavi" onclick="sendCommand('/action', 'vilavi_calc')">🧮 КАЛЬКУЛЯТОР ПРИБЫЛИ</button>
             <button class="btn-action vilavi" onclick="sendCommand('/action', 'vilavi_pres')">📄 СОЗДАТЬ ПРЕЗЕНТАЦИЮ</button>
         </div>
-        <div class="label">Наработки VILAVI</div>
-        <div class="grid">
-            <button class="btn-small" onclick="sendCommand('/view', 'slide_1')">🖼 Слайд 1: Старт</button>
-            <button class="btn-small" onclick="sendCommand('/view', 'knowledge_base')">📚 База Знаний</button>
-        </div>
-        <div class="card" style="background: rgba(239, 68, 68, 0.1);">
-            <div class="label" style="color: #fca5a5;">Статус проекта</div>
-            <div style="font-size: 13px;">Модель: Gemini 2.0 Flash<br>Файлов изучено: 11<br>Стратегия: Блиц-криг 500 PV</div>
-        </div>
     </div>
 
     <script>
         const tg = window.Telegram.WebApp;
         tg.expand();
+        tg.ready();
 
         function showTab(tab) {
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active', 'vilavi-active'));
-            
             document.getElementById('s-' + tab).classList.add('active');
-            const tabEl = document.getElementById('t-' + tab);
-            tabEl.classList.add('active');
-            if(tab === 'vilavi') tabEl.classList.add('vilavi-active');
+            const el = document.getElementById('t-' + tab);
+            el.classList.add('active');
+            if(tab === 'vilavi') el.classList.add('vilavi-active');
         }
 
-        function sendCommand(cmd, val) {
-            console.log('Sending command:', cmd, val);
+        async function sendCommand(cmd, val) {
+            // Визуальный отклик
+            tg.HapticFeedback.notificationOccurred('success');
+            
             try {
-                tg.sendData(JSON.stringify({command: cmd, value: val}));
-                // tg.close(); // Временно закомментируем, чтобы видеть ошибки
+                const response = await fetch('http://85.209.132.81:5678/webhook/mike-hub', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ command: cmd, value: val, userId: 351234035 })
+                });
+                
+                if (response.ok) {
+                    tg.showAlert('Майк принял команду!');
+                } else {
+                    throw new Error('Ошибка связи');
+                }
             } catch (e) {
-                alert('Ошибка отправки: ' + e.message);
+                // Если обычный fetch не прошел (блокировка CORS), пробуем через tg.sendData
+                tg.sendData(JSON.stringify({command: cmd, value: val}));
+                tg.showAlert('Сообщение отправлено боту!');
             }
         }
     </script>
