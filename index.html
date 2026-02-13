@@ -97,8 +97,13 @@
         }
 
         function sendCommand(cmd, val) {
-            tg.sendData(JSON.stringify({command: cmd, value: val}));
-            tg.close();
+            console.log('Sending command:', cmd, val);
+            try {
+                tg.sendData(JSON.stringify({command: cmd, value: val}));
+                // tg.close(); // Временно закомментируем, чтобы видеть ошибки
+            } catch (e) {
+                alert('Ошибка отправки: ' + e.message);
+            }
         }
     </script>
 </body>
