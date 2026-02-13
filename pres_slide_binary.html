@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>VILAVI Binary Magic</title>
+    <style>
+        body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background: #020617; color: white; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .slide { width: 900px; height: 500px; background: radial-gradient(circle at top left, #1e293b, #020617); border-radius: 40px; padding: 50px; border: 1px solid rgba(255,255,255,0.1); position: relative; overflow: hidden; box-shadow: 0 50px 100px -20px rgba(0,0,0,1); }
+        
+        .accent-blur { position: absolute; width: 300px; height: 300px; background: #ef4444; filter: blur(150px); opacity: 0.15; top: -100px; right: -100px; }
+        
+        .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 60px; }
+        .title { font-size: 42px; font-weight: 900; letter-spacing: -2px; line-height: 1; }
+        .badge { background: #ef4444; height: fit-content; padding: 8px 20px; border-radius: 100px; font-size: 14px; font-weight: 800; text-transform: uppercase; }
+
+        .columns { display: flex; gap: 40px; align-items: stretch; }
+        .column { flex: 1; background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border-radius: 30px; padding: 30px; border: 1px solid rgba(255,255,255,0.05); }
+        .column-weak { border-color: #ef4444; background: rgba(239, 68, 68, 0.03); }
+
+        .col-header { font-size: 12px; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; }
+        .col-value { font-size: 48px; font-weight: 900; margin-bottom: 10px; }
+        .col-desc { font-size: 14px; color: #94a3b8; line-height: 1.6; }
+
+        .payout-box { margin-top: 40px; background: #fff; color: #000; border-radius: 20px; padding: 25px; display: flex; justify-content: space-between; align-items: center; }
+        .payout-text { font-size: 18px; font-weight: 700; }
+        .payout-sum { font-size: 32px; font-weight: 900; color: #ef4444; }
+
+        .footer { position: absolute; bottom: 40px; left: 50px; font-size: 12px; color: #475569; }
+    </style>
+</head>
+<body>
+    <div class="accent-blur"></div>
+    <div class="slide">
+        <div class="header">
+            <div class="title">Динамический<br><span style="color:#ef4444">Бинарный Бонус</span></div>
+            <div class="badge">Квалификация 1 CARAT</div>
+        </div>
+
+        <div class="columns">
+            <div class="column">
+                <div class="col-header">Левая ветка</div>
+                <div class="col-value">5 000 <span style="font-size:20px; color:#475569">PV</span></div>
+                <div class="col-desc">Сильная нога. Объемы сохраняются и переносятся на следующий месяц. Твой золотой запас.</div>
+            </div>
+            <div class="column column-weak">
+                <div class="col-header" style="color:#ef4444">Правая (Слабая)</div>
+                <div class="col-value">3 200 <span style="font-size:20px; color:#ef4444">PV</span></div>
+                <div class="col-desc">Расчетная ветка. Именно отсюда система начисляет твой основной доход в глубину.</div>
+            </div>
+        </div>
+
+        <div class="payout-box">
+            <div class="payout-text">Твой суммарный доход по Бинару составит:</div>
+            <div class="payout-sum">~320 u.e.</div>
+        </div>
+
+        <div class="footer">Майк Интеллект | Профессиональная аналитика маркетинга VILAVI</div>
+    </div>
+</body>
+</html>
