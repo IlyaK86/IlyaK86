@@ -3,66 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mike Hub v4.0 | Stable</title>
+    <title>Mike Hub v5.0 | Professional Edition</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root { --bg: #05080f; --card: rgba(30, 41, 59, 0.85); --accent: #ef4444; --soft-blue: #3b82f6; --text: #f8fafc; }
-        body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 16px; overflow-x: hidden; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 16px; overflow-x: hidden; }
         .header h1 { font-size: 24px; text-align: center; background: linear-gradient(to right, #60a5fa, #f87171); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 15px 0; }
-        .card { background: var(--card); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 20px; margin-bottom: 15px; }
-        .label { font-size: 11px; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 10px; }
-        .btn { width: 100%; padding: 16px; border-radius: 12px; border: none; font-weight: 700; color: white; cursor: pointer; transition: 0.2s; margin-bottom: 8px; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        
+        .tab-container { display: flex; gap: 8px; margin-bottom: 20px; }
+        .tab { flex: 1; padding: 12px; border-radius: 12px; background: rgba(255,255,255,0.05); text-align: center; font-size: 13px; font-weight: bold; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); color: #94a3b8; }
+        .tab.active { background: var(--card); border-color: var(--soft-blue); color: var(--soft-blue); }
+        .tab.vilavi-active { border-color: var(--accent); color: var(--accent); }
+
+        .section { display: none; }
+        .section.active { display: flex; flex-direction: column; gap: 16px; }
+
+        .card { background: var(--card); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 20px; }
+        .label { font-size: 11px; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 12px; display: block; }
+        
+        .btn { width: 100%; padding: 16px; border-radius: 12px; border: none; font-weight: 700; color: white; cursor: pointer; transition: 0.2s; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 14px; }
         .btn:active { transform: scale(0.97); opacity: 0.8; }
-        .btn-blue { background: #2563eb; }
-        .btn-red { background: #dc2626; }
+        .btn-blue { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+        .btn-red { background: linear-gradient(135deg, #dc2626, #ef4444); }
         .btn-outline { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); }
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        #status-bar { position: fixed; bottom: 0; left: 0; right: 0; padding: 10px; font-size: 10px; text-align: center; background: rgba(0,0,0,0.5); backdrop-filter: blur(5px); color: #475569; }
+        
+        #status-bar { position: fixed; bottom: 0; left: 0; right: 0; padding: 10px; font-size: 10px; text-align: center; background: rgba(0,0,0,0.5); color: #475569; }
     </style>
 </head>
 <body>
     <div class="header"><h1>МАЙК ПОМОЩНИК</h1></div>
 
-    <div class="label">Управление режимом</div>
-    <div class="card">
-        <button class="btn btn-blue" onclick="send('work')">💼 РАБОЧИЙ КОНТЕКСТ</button>
-        <button class="btn btn-outline" onclick="send('personal')">🏠 ЛИЧНЫЙ КОНТЕКСТ</button>
+    <div class="tab-container">
+        <div id="t-main" class="tab active" onclick="showTab('main')">🤖 ГЛАВНАЯ</div>
+        <div id="t-vilavi" class="tab" onclick="showTab('vilavi')">🏆 VILAVI</div>
     </div>
 
-    <div class="label">Проект VILAVI</div>
-    <div class="card" style="border-color: rgba(239, 68, 68, 0.3);">
-        <button class="btn btn-red" onclick="view('interactive_calc.html')">🧮 ИНТЕРАКТИВНЫЙ КАЛЬКУЛЯТОР</button>
-        <div class="grid">
-            <button class="btn btn-outline" style="font-size: 12px;" onclick="view('pres_slide_1.html')">🖼 Слайд 1</button>
-            <button class="btn btn-outline" style="font-size: 12px;" onclick="view('pres_slide_2.html')">📊 Слайд 2</button>
+    <!-- MAIN SECTION -->
+    <div id="s-main" class="section active">
+        <div class="card">
+            <span class="label">Режим ассистента</span>
+            <button class="btn btn-blue" onclick="send('/context', 'work')">💼 РАБОЧИЙ РЕЖИМ</button>
+            <button class="btn btn-outline" onclick="send('/context', 'personal')">🏠 ЛИЧНЫЙ РЕЖИМ</button>
         </div>
     </div>
 
-    <div id="status-bar">Система активирована. Связь с сервером установлена.</div>
+    <!-- VILAVI SECTION -->
+    <div id="s-vilavi" class="section">
+        <div class="card">
+            <span class="label">Твое Стратегическое Развитие</span>
+            <button class="btn btn-blue" onclick="view('my_goals.html')">🧑‍🏫 МОЙ ПЛАН РАЗВИТИЯ</button>
+        </div>
+        <div class="card">
+            <span class="label">Маркетинг-инструменты</span>
+            <button class="btn btn-red" onclick="view('interactive_calc.html')">🧮 ИНТЕРАКТИВНЫЙ КАЛЬКУЛЯТОР</button>
+            <div class="grid">
+                <button class="btn btn-outline" style="font-size: 12px;" onclick="view('pres_slide_1.html')">🖼 Слайд 1</button>
+                <button class="btn btn-outline" style="font-size: 12px;" onclick="view('pres_slide_2.html')">📊 Слайд 2</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="status-bar">Система активна. Связь с сервером установлена.</div>
 
     <script>
         const tg = window.Telegram.WebApp;
         tg.expand();
         tg.ready();
 
+        function showTab(tab) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active', 'vilavi-active'));
+            document.getElementById('s-' + tab).classList.add('active');
+            const el = document.getElementById('t-' + tab);
+            el.classList.add('active');
+            if(tab === 'vilavi') el.classList.add('vilavi-active');
+        }
+
         function view(filename) {
             tg.HapticFeedback.impactOccurred('medium');
             window.location.href = filename;
         }
 
-        function send(cmd) {
+        function send(cmd, val) {
             tg.HapticFeedback.notificationOccurred('success');
-            const status = document.getElementById('status-bar');
-            status.innerText = 'Отправка команды: ' + cmd + '...';
-            
-            // Мы используем "магический" пиксель для отправки данных в n8n без перезагрузки страницы
             const img = new Image();
-            img.src = 'http://85.209.132.81:5678/webhook/mike-hub?command=' + cmd + '&t=' + Date.now();
-            
-            setTimeout(() => {
-                status.innerText = '✅ Майк принял сигнал!';
-                setTimeout(() => { status.innerText = 'Система активна'; }, 2000);
-            }, 500);
+            img.src = 'http://85.209.132.81:5678/webhook/mike-hub?command=' + cmd + '&value=' + val;
         }
     </script>
 </body>
