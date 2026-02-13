@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VILAVI Interactive Calc</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        :root { --bg: #05080f; --card: rgba(30, 41, 59, 0.8); --accent: #ef4444; --text: #f8fafc; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; }
+        .back-btn { background: rgba(255,255,255,0.1); border: none; color: white; padding: 8px 15px; border-radius: 10px; cursor: pointer; margin-bottom: 20px; font-size: 14px; }
+        .card { background: var(--card); border-radius: 20px; padding: 20px; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 20px; }
+        .label { font-size: 12px; text-transform: uppercase; color: #94a3b8; margin-bottom: 10px; display: block; }
+        .slider { width: 100%; height: 8px; border-radius: 5px; background: #1e293b; outline: none; -webkit-appearance: none; margin: 15px 0; }
+        .slider::-webkit-slider-thumb { -webkit-appearance: none; width: 24px; height: 24px; background: var(--accent); border-radius: 50%; cursor: pointer; border: 4px solid #fff; }
+        .value-display { font-size: 32px; font-weight: 800; color: #fff; text-align: center; margin: 10px 0; }
+        .profit-box { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); padding: 20px; border-radius: 15px; text-align: center; }
+        .profit-val { font-size: 44px; font-weight: 900; }
+        .chat-box { background: rgba(0,0,0,0.3); border-radius: 15px; padding: 15px; }
+        input { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); padding: 12px; border-radius: 10px; color: white; margin-top: 10px; box-sizing: border-box; }
+    </style>
+</head>
+<body>
+    <button class="back-btn" onclick="window.location.href='index.html'">← В ХАБ</button>
+    
+    <div class="header" style="text-align:center; margin-bottom:20px;">
+        <h2 style="margin:0">Калькулятор 🚀</h2>
+        <p style="font-size:12px; color:#64748b">Стратегия: Бизнес-Вход (500 PV)</p>
+    </div>
+
+    <div class="card">
+        <span class="label">Партнеров в 1-й линии (500 PV)</span>
+        <div class="value-display" id="partner-count">2</div>
+        <input type="range" min="0" max="20" value="2" class="slider" id="partnersRange">
+    </div>
+
+    <div class="profit-box">
+        <span class="label" style="color:white; opacity:0.8">Твой Стартовый Бонус</span>
+        <div class="profit-val" id="total-profit">250 u.e.</div>
+        <div style="font-size:12px; opacity:0.9">Это чистые деньги за личные рекомендации!</div>
+    </div>
+
+    <div class="card" style="margin-top:20px">
+        <span class="label">Спросить Майка по теме</span>
+        <div class="chat-box">
+            <input type="text" id="user-question" placeholder="Задай вопрос эксперту...">
+            <button onclick="askMike()" style="width:100%; background:#3b82f6; border:none; color:white; padding:10px; border-radius:10px; margin-top:10px; font-weight:bold;">ОТПРАВИТЬ</button>
+        </div>
+    </div>
+
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.expand();
+
+        const range = document.getElementById('partnersRange');
+        const pCount = document.getElementById('partner-count');
+        const profit = document.getElementById('total-profit');
+
+        range.input = function() {
+            const val = this.value;
+            pCount.innerText = val;
+            // Расчет: на Бизнес-входе (500 PV) бонус за каждого такого же партнера = 125 у.е.
+            const result = val * 125;
+            profit.innerText = result + ' u.e.';
+            tg.HapticFeedback.selectionChanged();
+        };
+
+        async function askMike() {
+            const q = document.getElementById('user-question').value;
+            if(!q) return;
+            tg.HapticFeedback.notificationOccurred('success');
+            const img = new Image();
+            img.src = 'http://85.209.132.81:5678/webhook/mike-hub?command=question&value=' + encodeURIComponent(q);
+            tg.showAlert('Майк изучает ваш вопрос!');
+            document.getElementById('user-question').value = '';
+        }
+    </script>
+</body>
+</html>
