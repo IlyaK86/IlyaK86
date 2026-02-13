@@ -1,20 +1,64 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mike Hub v4.0 | Stable</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        body { background: #000; color: white; font-family: sans-serif; text-align: center; padding: 50px; }
-        .btn { display: block; width: 100%; padding: 20px; background: #007aff; color: white; border-radius: 10px; text-decoration: none; font-weight: bold; margin-bottom: 20px; }
+        :root { --bg: #05080f; --card: rgba(30, 41, 59, 0.85); --accent: #ef4444; --soft-blue: #3b82f6; --text: #f8fafc; }
+        body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 16px; overflow-x: hidden; }
+        .header h1 { font-size: 24px; text-align: center; background: linear-gradient(to right, #60a5fa, #f87171); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 15px 0; }
+        .card { background: var(--card); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 20px; margin-bottom: 15px; }
+        .label { font-size: 11px; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 10px; }
+        .btn { width: 100%; padding: 16px; border-radius: 12px; border: none; font-weight: 700; color: white; cursor: pointer; transition: 0.2s; margin-bottom: 8px; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .btn:active { transform: scale(0.97); opacity: 0.8; }
+        .btn-blue { background: #2563eb; }
+        .btn-red { background: #dc2626; }
+        .btn-outline { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        #status-bar { position: fixed; bottom: 0; left: 0; right: 0; padding: 10px; font-size: 10px; text-align: center; background: rgba(0,0,0,0.5); backdrop-filter: blur(5px); color: #475569; }
     </style>
 </head>
 <body>
-    <h1>ТЕСТ СВЯЗИ</h1>
-    <!-- Мы используем прямую ссылку. При клике Телеграм спросит "Открыть внешнюю ссылку?" - нажми ДА -->
-    <a href="http://85.209.132.81:5678/webhook/mike-hub?command=work" class="btn">ПРОВЕРИТЬ СВЯЗЬ</a>
-    
+    <div class="header"><h1>МАЙК ПОМОЩНИК</h1></div>
+
+    <div class="label">Управление режимом</div>
+    <div class="card">
+        <button class="btn btn-blue" onclick="send('work')">💼 РАБОЧИЙ КОНТЕКСТ</button>
+        <button class="btn btn-outline" onclick="send('personal')">🏠 ЛИЧНЫЙ КОНТЕКСТ</button>
+    </div>
+
+    <div class="label">Проект VILAVI</div>
+    <div class="card" style="border-color: rgba(239, 68, 68, 0.3);">
+        <button class="btn btn-red" onclick="send('vilavi_calc')">🧮 КАЛЬКУЛЯТОР ПРИБЫЛИ</button>
+        <div class="grid">
+            <button class="btn btn-outline" style="font-size: 12px;" onclick="send('slide_1')">🖼 Слайд 1</button>
+            <button class="btn btn-outline" style="font-size: 12px;" onclick="send('slide_2')">📊 Слайд 2</button>
+        </div>
+    </div>
+
+    <div id="status-bar">Система активирована. Связь с сервером установлена.</div>
+
     <script>
-        window.Telegram.WebApp.expand();
+        const tg = window.Telegram.WebApp;
+        tg.expand();
+        tg.ready();
+
+        function send(cmd) {
+            tg.HapticFeedback.notificationOccurred('success');
+            const status = document.getElementById('status-bar');
+            status.innerText = 'Отправка команды: ' + cmd + '...';
+            
+            // Мы используем "магический" пиксель для отправки данных в n8n без перезагрузки страницы
+            const img = new Image();
+            img.src = 'http://85.209.132.81:5678/webhook/mike-hub?command=' + cmd + '&t=' + Date.now();
+            
+            setTimeout(() => {
+                status.innerText = '✅ Майк принял сигнал!';
+                setTimeout(() => { status.innerText = 'Система активна'; }, 2000);
+            }, 500);
+        }
     </script>
 </body>
 </html>
