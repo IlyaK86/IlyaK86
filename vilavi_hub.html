@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VILAVI Super HUB</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        :root { --bg: #05080f; --card: rgba(30, 41, 59, 0.7); --accent: #ef4444; --text: #f8fafc; --blue: #3b82f6; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 16px; }
+        .back-btn { background: rgba(255,255,255,0.05); border: none; color: white; padding: 10px 15px; border-radius: 12px; cursor: pointer; margin-bottom: 20px; font-weight: bold; }
+        
+        .section-title { font-size: 11px; text-transform: uppercase; color: #64748b; letter-spacing: 1.5px; margin: 20px 0 10px 5px; }
+        .card { background: var(--card); border-radius: 20px; padding: 20px; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 15px; }
+
+        /* Калькулятор */
+        .val-display { font-size: 36px; font-weight: 900; text-align: center; margin: 10px 0; color: white; }
+        .slider { width: 100%; -webkit-appearance: none; height: 6px; border-radius: 5px; background: #1e293b; outline: none; margin: 15px 0; }
+        .slider::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; background: var(--accent); border-radius: 50%; cursor: pointer; border: 3px solid #fff; }
+
+        /* Итог */
+        .profit-banner { background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); border-radius: 18px; padding: 20px; text-align: center; box-shadow: 0 10px 20px rgba(239, 68, 68, 0.2); }
+        .profit-label { font-size: 12px; text-transform: uppercase; font-weight: 800; opacity: 0.8; }
+        .profit-amount { font-size: 40px; font-weight: 900; margin: 5px 0; }
+
+        /* Сетка инфографики */
+        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .info-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); padding: 15px; border-radius: 15px; text-align: center; cursor: pointer; }
+        .info-card i { font-style: normal; font-size: 24px; display: block; margin-bottom: 5px; }
+        .info-card span { font-size: 11px; font-weight: 700; color: #94a3b8; }
+    </style>
+</head>
+<body>
+    <button class="back-btn" onclick="window.location.href='index.html'">← К ОБЩИМ НАСТРОЙКАМ</button>
+
+    <div class="profit-banner">
+        <div class="profit-label">Прогноз дохода (Старт)</div>
+        <div class="profit-amount" id="totalProfit">250 u.e.</div>
+        <div style="font-size: 11px;">Квалификация: BRONZE 🥉</div>
+    </div>
+
+    <div class="section-title">Симулятор роста сети</div>
+    <div class="card">
+        <div style="display:flex; justify-content:space-between; font-size:13px;">
+            <span>Партнеров (Бизнес-вход)</span>
+            <span id="pCount" style="font-weight:bold; color:var(--accent);">2</span>
+        </div>
+        <input type="range" min="0" max="30" value="2" class="slider" id="pSlider">
+        <div style="font-size:11px; color:#475569; text-align:center;">Двигай ползунок, чтобы увидеть магию 25% бонуса!</div>
+    </div>
+
+    <div class="section-title">База знаний (Инфографика)</div>
+    <div class="info-grid">
+        <div class="info-card" onclick="location.href='pres_slide_1.html'"><i>🚀</i><span>СТРАТЕГИЯ 500</span></div>
+        <div class="info-card" onclick="location.href='pres_slide_2.html'"><i>📊</i><span>БОНУСЫ В ЦИФРАХ</span></div>
+        <div class="info-card" onclick="alert('В разработке...')"><i>💎</i><span>БИНАРНЫЙ ПЛАН</span></div>
+        <div class="info-card" onclick="viewGoals()"><i>🧑‍🏫</i><span>МОЙ ПЛАН</span></div>
+    </div>
+
+    <div class="section-title">Спросить Майка</div>
+    <div class="card" style="padding:10px;">
+        <input type="text" id="q" placeholder="Как закрыть 1 CARAT?" style="width:100%; background:none; border:none; color:white; padding:10px; outline:none;">
+        <button onclick="ask()" style="width:100%; background:var(--blue); border:none; color:white; padding:10px; border-radius:10px; font-weight:bold;">ОТПРАВИТЬ ВОПРОС</button>
+    </div>
+
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.expand();
+        
+        const slider = document.getElementById('pSlider');
+        const pCount = document.getElementById('pCount');
+        const profit = document.getElementById('totalProfit');
+
+        slider.oninput = function() {
+            pCount.innerText = this.value;
+            profit.innerText = (this.value * 125) + ' u.e.';
+            tg.HapticFeedback.selectionChanged();
+        };
+
+        function viewGoals() { window.location.href = 'my_goals.html'; }
+
+        async function ask() {
+            const val = document.getElementById('q').value;
+            if(!val) return;
+            tg.HapticFeedback.notificationOccurred('success');
+            new Image().src = 'http://85.209.132.81:5678/webhook/mike-hub?command=expert_q&value=' + encodeURIComponent(val);
+            tg.showAlert('Майк изучает документы VILAVI... Ответ придет в чат!');
+            document.getElementById('q').value = '';
+        }
+    </script>
+</body>
+</html>
