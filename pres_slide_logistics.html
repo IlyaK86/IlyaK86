@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>VILAVI Logistics Map</title>
+    <style>
+        body { font-family: 'Inter', sans-serif; background: #020617; color: white; display:flex; justify-content:center; align-items:center; min-height:100vh; margin:0; }
+        .slide { width: 900px; height: 550px; background: #0f172a; border-radius: 40px; padding: 40px; border: 1px solid rgba(255,255,255,0.1); position:relative; overflow:hidden; }
+        .nav-btn { position: absolute; top: 20px; left: 20px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; padding: 8px 15px; border-radius: 10px; cursor:pointer; }
+        
+        .header { text-align: center; margin-bottom: 30px; }
+        .title { font-size: 32px; font-weight: 900; color: #10b981; }
+
+        .tabs { display: flex; gap: 10px; justify-content: center; margin-bottom: 30px; }
+        .tab { padding: 12px 25px; border-radius: 12px; background: rgba(255,255,255,0.05); cursor: pointer; transition: 0.3s; font-size: 14px; font-weight: bold; border: 1px solid transparent; }
+        .tab.active { background: #10b981; color: white; }
+
+        .content-box { background: rgba(255,255,255,0.03); border-radius: 25px; padding: 30px; min-height: 200px; display: flex; align-items: center; gap: 40px; }
+        .info-point { margin-bottom: 15px; display: flex; align-items: flex-start; gap: 10px; }
+        .icon-p { background: #10b981; padding: 5px; border-radius: 5px; font-size: 12px; }
+        
+        .alert-card { margin-top: 25px; background: rgba(245, 158, 11, 0.1); border: 1px solid #f59e0b; border-radius: 15px; padding: 15px; font-size: 13px; color: #fcd34d; }
+    </style>
+</head>
+<body>
+    <button class="nav-btn" onclick="location.href='index.html'">🏠 ДОМОЙ</button>
+    <div class="slide">
+        <div class="header">
+            <div class="title">ГЛОБАЛЬНАЯ ЛОГИСТИКА</div>
+            <p style="color: #64748b">Доставляем здоровье в любую точку мира</p>
+        </div>
+
+        <div class="tabs">
+            <div class="tab active" onclick="showTab('rf')">РОССИЯ / КЗ</div>
+            <div class="tab" onclick="showTab('rb')">БЕЛАРУСЬ</div>
+            <div class="tab" onclick="showTab('world')">МИР (DHL)</div>
+        </div>
+
+        <div class="content-box" id="rf-content">
+            <div style="font-size: 60px;">🚚</div>
+            <div>
+                <div class="info-point"><b>Партнеры:</b> DPD и Почта России (до двери и в ПВЗ).</div>
+                <div class="info-point"><span class="icon-p">БЕСПЛАТНО</span> От 6 000 рублей (кроме EMS).</div>
+                <div class="info-point"><b>Сроки:</b> Формируются в ЛК при заказе.</div>
+            </div>
+        </div>
+
+        <div class="alert-card">
+            <b>⚠️ ВНИМАНИЕ:</b> Обязательно проверяйте содержимое при курьере! Составляйте акт при любом повреждении коробки для оперативной замены.
+        </div>
+
+        <div style="position: absolute; bottom: 30px; right: 40px; font-size: 12px; color: #475569;">
+            Майк Сервис | Данные актуальны на февраль 2026
+        </div>
+    </div>
+
+    <script>
+        function showTab(type) {
+            const tabs = document.querySelectorAll('.tab');
+            const box = document.getElementById('rf-content');
+            tabs.forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+
+            if(type === 'rf') {
+                box.innerHTML = '<div style="font-size: 60px;">🚚</div><div><div class="info-point"><b>Партнеры:</b> DPD и Почта России (до двери и в ПВЗ).</div><div class="info-point"><span class="icon-p">БЕСПЛАТНО</span> От 6 000 рублей (кроме EMS).</div><div class="info-point"><b>Сроки:</b> Формируются в ЛК при заказе.</div></div>';
+            } else if(type === 'rb') {
+                box.innerHTML = '<div style="font-size: 60px;">🏢</div><div><div class="info-point"><b>Особенности:</b> На текущий момент доступен только САМОВЫВОЗ.</div><div class="info-point"><b>Склады:</b> Франшизные склады внутри страны.</div><div class="info-point"><b>Важно:</b> Уточняйте адреса в Личном Кабинете.</div></div>';
+            } else {
+                box.innerHTML = '<div style="font-size: 60px;">🌍</div><div><div class="info-point"><b>Служба:</b> DHL из Новосибирска.</div><div class="info-point"><b>Пошлины:</b> Возможна оплата НДС и таможенных сборов (на стороне получателя).</div><div class="info-point"><b>Отказ:</b> При отказе от пошлин возврат денег не осуществляется.</div></div>';
+            }
+        }
+    </script>
+</body>
+</html>
