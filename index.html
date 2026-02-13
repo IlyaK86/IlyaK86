@@ -1,56 +1,20 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mike Hub v3.0 | Power Connection</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        :root { --bg: #05080f; --card: rgba(30, 41, 59, 0.8); --accent: #ef4444; --text: #f8fafc; }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 16px; display: flex; flex-direction: column; gap: 15px; }
-        .header h1 { font-size: 22px; text-align: center; background: linear-gradient(to right, #60a5fa, #f87171); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 10px 0; }
-        .card { background: var(--card); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .btn { width: 100%; padding: 16px; border-radius: 15px; border: none; font-weight: 800; color: white; cursor: pointer; transition: 0.2s; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
-        .btn:active { transform: scale(0.96); }
-        .btn-work { background: linear-gradient(135deg, #2563eb, #3b82f6); }
-        .btn-vilavi { background: linear-gradient(135deg, #dc2626, #ef4444); }
-        #status { font-size: 12px; text-align: center; color: #475569; margin-top: 10px; }
+        body { background: #000; color: white; font-family: sans-serif; text-align: center; padding: 50px; }
+        .btn { display: block; width: 100%; padding: 20px; background: #007aff; color: white; border-radius: 10px; text-decoration: none; font-weight: bold; margin-bottom: 20px; }
     </style>
 </head>
 <body>
-    <div class="header"><h1>МАЙК: ЦЕНТР УПРАВЛЕНИЯ</h1></div>
+    <h1>ТЕСТ СВЯЗИ</h1>
+    <!-- Мы используем прямую ссылку. При клике Телеграм спросит "Открыть внешнюю ссылку?" - нажми ДА -->
+    <a href="http://85.209.132.81:5678/webhook/mike-hub?command=work" class="btn">ПРОВЕРИТЬ СВЯЗЬ</a>
     
-    <div class="card">
-        <button class="btn btn-work" onclick="callMike('/context', 'work')">💼 Рабочий режим</button>
-        <button class="btn btn-vilavi" onclick="callMike('/action', 'vilavi_calc')">🏆 Проект VILAVI</button>
-    </div>
-
-    <div id="status">Система готова. Нажмите кнопку.</div>
-
     <script>
-        const tg = window.Telegram.WebApp;
-        tg.expand();
-        tg.ready();
-
-        async function callMike(cmd, val) {
-            const status = document.getElementById('status');
-            status.innerText = 'Связь с Майком...';
-            tg.HapticFeedback.impactOccurred('medium');
-
-            // Мы используем прямой запрос к твоему n8n. 
-            // Чтобы избежать CORS, мы шлем запрос как plain text, n8n его поймет.
-            try {
-                await fetch('http://85.209.132.81:5678/webhook/mike-hub', {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    body: JSON.stringify({ command: cmd, value: val, user: 'Ilya' })
-                });
-                status.innerText = '✅ Команда отправлена!';
-                setTimeout(() => { status.innerText = 'Готов к новым задачам'; }, 3000);
-            } catch (e) {
-                status.innerText = '❌ Ошибка сети';
-            }
-        }
+        window.Telegram.WebApp.expand();
     </script>
 </body>
 </html>
