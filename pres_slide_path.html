@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>VILAVI - Path to 1 CARAT</title>
+    <style>
+        body { font-family: 'Inter', sans-serif; background: #020617; color: white; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow: hidden; }
+        .slide { width: 900px; height: 550px; background: #0f172a; border-radius: 40px; padding: 40px; border: 1px solid rgba(255,255,255,0.1); position: relative; box-shadow: 0 50px 100px -20px rgba(0,0,0,1); }
+        
+        /* Навигация */
+        .nav-bar { position: absolute; top: 20px; left: 20px; display: flex; gap: 10px; }
+        .nav-btn { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; padding: 8px 15px; border-radius: 10px; cursor: pointer; backdrop-filter: blur(10px); font-weight: bold; }
+
+        .header { text-align: center; margin-bottom: 40px; }
+        .title { font-size: 38px; font-weight: 900; background: linear-gradient(to right, #3b82f6, #60a5fa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        .progress-container { display: flex; justify-content: space-between; align-items: center; margin-top: 50px; position: relative; }
+        .progress-line { position: absolute; top: 50%; left: 0; width: 100%; height: 4px; background: rgba(255,255,255,0.05); z-index: 1; transform: translateY(-50%); }
+        .step { z-index: 2; width: 120px; text-align: center; }
+        .circle { width: 60px; height: 60px; background: #1e293b; border: 3px solid #3b82f6; border-radius: 50%; margin: 0 auto 15px; display: flex; justify-content: center; align-items: center; font-weight: 900; font-size: 20px; transition: 0.3s; }
+        .step.active .circle { background: #3b82f6; box-shadow: 0 0 20px #3b82f6; color: white; }
+        .step-label { font-size: 12px; font-weight: 700; color: #94a3b8; text-transform: uppercase; }
+        
+        .formula-card { margin-top: 60px; background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 20px; padding: 25px; display: flex; justify-content: space-around; align-items: center; }
+        .formula-item { text-align: center; }
+        .item-val { font-size: 32px; font-weight: 900; color: white; }
+        .item-label { font-size: 14px; color: #60a5fa; }
+    </style>
+</head>
+<body>
+    <div class="nav-bar">
+        <button class="nav-btn" onclick="location.href='index.html'">🏠 ДОМОЙ</button>
+        <button class="nav-btn" onclick="history.back()">← НАЗАД</button>
+    </div>
+
+    <div class="slide">
+        <div class="header">
+            <div class="title">СТРАТЕГИЯ: КВАЛИФИКАЦИЯ 1 CARAT</div>
+            <p style="color: #64748b">Самый короткий путь к большим деньгам VILAVI</p>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-line"></div>
+            <div class="step active">
+                <div class="circle">1</div>
+                <div class="step-label">Твой Вход<br>500 PV</div>
+            </div>
+            <div class="step active">
+                <div class="circle">2</div>
+                <div class="step-label">2 Партнера<br>(1000 PV)</div>
+            </div>
+            <div class="step">
+                <div class="circle">4</div>
+                <div class="step-label">Их дубликация<br>(2000 PV)</div>
+            </div>
+            <div class="step">
+                <div class="circle">🏆</div>
+                <div class="step-label">1 CARAT<br>(3000+ PV)</div>
+            </div>
+        </div>
+
+        <div class="formula-card">
+            <div class="formula-item">
+                <div class="item-val">6 ЧЕЛОВЕК</div>
+                <div class="item-label">в твоей сети</div>
+            </div>
+            <div style="font-size: 30px; opacity: 0.3">+</div>
+            <div class="formula-item">
+                <div class="item-val">БИЗНЕС-ВХОД</div>
+                <div class="item-label">по 500 PV</div>
+            </div>
+            <div style="font-size: 30px; opacity: 0.3">=</div>
+            <div class="formula-item">
+                <div class="item-val" style="color: #3b82f6;">1 CARAT</div>
+                <div class="item-label">Успех достигнут!</div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px; font-size: 13px; color: #475569;">
+            Майк Аналитик: Достижение этой цели открывает доступ к БИНАРНОМУ БОНУСУ.
+        </div>
+    </div>
+</body>
+</html>
