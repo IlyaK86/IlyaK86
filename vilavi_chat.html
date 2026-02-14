@@ -3,68 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VILAVI AI Expert | Mike</title>
+    <title>VILAVI Digital Hub | Mike</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        :root { --bg: #020617; --primary: #ef4444; --card: rgba(30, 41, 59, 0.7); --text: #f8fafc; }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; display: flex; flex-direction: column; height: 100vh; }
+        :root { --bg: #020617; --primary: #ef4444; --card: rgba(30, 41, 59, 0.7); --text: #f8fafc; --accent: #3b82f6; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
         
-        .chat-header { padding: 20px; background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; gap: 15px; }
-        .status-dot { width: 10px; height: 10px; background: #10b981; border-radius: 50%; box-shadow: 0 0 10px #10b981; }
-        
-        .messages { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 15px; }
-        .msg { max-width: 80%; padding: 12px 18px; border-radius: 18px; font-size: 15px; line-height: 1.5; }
-        .msg.user { align-self: flex-end; background: var(--primary); color: white; border-bottom-right-radius: 4px; }
-        .msg.bot { align-self: flex-start; background: var(--card); border: 1px solid rgba(255,255,255,0.1); border-bottom-left-radius: 4px; }
+        .nav-tabs { display: flex; background: #0f172a; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .tab-btn { flex: 1; padding: 15px; border: none; background: none; color: #64748b; font-weight: bold; cursor: pointer; border-bottom: 3px solid transparent; transition: 0.3s; font-size: 12px; }
+        .tab-btn.active { color: var(--primary); border-bottom-color: var(--primary); background: rgba(239, 68, 68, 0.05); }
 
-        .input-area { padding: 20px; background: rgba(15, 23, 42, 0.9); display: flex; gap: 10px; }
-        input { flex: 1; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 12px; color: white; outline: none; }
-        button { background: var(--primary); border: none; color: white; padding: 12px 20px; border-radius: 12px; font-weight: bold; cursor: pointer; }
+        .content-area { flex: 1; overflow-y: auto; display: none; padding: 20px; }
+        .content-area.active { display: block; }
+
+        /* Стили чата */
+        .chat-container { display: flex; flex-direction: column; height: 100%; }
+        .messages { flex: 1; overflow-y: auto; padding-bottom: 20px; display: flex; flex-direction: column; gap: 10px; }
+        .msg { max-width: 85%; padding: 12px 16px; border-radius: 15px; font-size: 14px; }
+        .msg.user { align-self: flex-end; background: var(--primary); border-bottom-right-radius: 2px; }
+        .msg.bot { align-self: flex-start; background: var(--card); border: 1px solid rgba(255,255,255,0.1); border-bottom-left-radius: 2px; }
+        
+        .input-box { display: flex; gap: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.1); }
+        input { flex: 1; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 12px; color: white; }
+
+        /* Стили инфографики */
+        .info-card { background: var(--card); border-radius: 15px; padding: 15px; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.05); }
+        .info-card h3 { margin: 0 0 10px 0; font-size: 16px; color: var(--primary); }
+        .stat-row { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 5px; }
+        .btn-view { width: 100%; padding: 10px; background: var(--accent); border: none; border-radius: 8px; color: white; font-weight: bold; cursor: pointer; margin-top: 10px; }
     </style>
 </head>
 <body>
-    <div class="chat-header">
-        <div class="status-dot"></div>
-        <div>
-            <div style="font-weight: 800; font-size: 18px;">Майк: VILAVI Expert</div>
-            <div style="font-size: 11px; color: #64748b;">AI-Консультант по маркетинг-плану</div>
+    <div class="nav-tabs">
+        <button class="tab-btn active" onclick="switchTab('tab-chat')">💬 ЭКСПЕРТ</button>
+        <button class="tab-btn" onclick="switchTab('tab-info')">📊 БАЗА ЗНАНИЙ</button>
+        <button class="tab-btn" onclick="switchTab('tab-calc')">🧮 ПОЛЗУНКИ</button>
+    </div>
+
+    <!-- ТАБ: ЧАТ -->
+    <div id="tab-chat" class="content-area active">
+        <div class="chat-container">
+            <div class="messages" id="msg-box">
+                <div class="msg bot">Привет! Я Майк. Я подключен к твоей базе данных VILAVI. О чем хочешь узнать?</div>
+            </div>
+            <div class="input-box">
+                <input type="text" id="user-q" placeholder="Ваш вопрос..." onkeypress="if(event.key==='Enter') callAI()">
+                <button onclick="callAI()" style="background:var(--primary); border:none; color:white; padding:10px 15px; border-radius:10px;">➔</button>
+            </div>
         </div>
     </div>
 
-    <div class="messages" id="chat-box">
-        <div class="msg bot">Привет! Я Майк. Я изучил все документы VILAVI и готов ответить на любой вопрос по цифрам, бонусам или логистике. С чего начнем?</div>
+    <!-- ТАБ: ИНФОГРАФИКА -->
+    <div id="tab-info" class="content-area">
+        <div class="info-card">
+            <h3>🚀 Стратегия Бизнес-Вход</h3>
+            <div class="stat-row"><span>Объем:</span> <b>500+ PV</b></div>
+            <div class="stat-row"><span>Бонус:</span> <b>25%</b></div>
+            <button class="btn-view" onclick="location.href='pres_slide_1.html'">ОТКРЫТЬ СЛАЙД</button>
+        </div>
+        <div class="info-card">
+            <h3>💎 Магия Бинара</h3>
+            <div class="stat-row"><span>Квалификация:</span> <b>1 CARAT</b></div>
+            <button class="btn-view" onclick="location.href='pres_slide_binary.html'">СМОТРЕТЬ ГРАФИК</button>
+        </div>
     </div>
 
-    <div class="input-area">
-        <input type="text" id="user-input" placeholder="Введите ваш вопрос..." onkeypress="if(event.key==='Enter') send()">
-        <button onclick="send()">ОТПРАВИТЬ</button>
+    <!-- ТАБ: КАЛЬКУЛЯТОР -->
+    <div id="tab-calc" class="content-area">
+        <div class="info-card" style="text-align:center;">
+            <p style="font-size:12px; color:#64748b;">Здесь скоро будет интерактивный калькулятор с ползунками...</p>
+            <button class="btn-view" onclick="location.href='interactive_calc.html'">ПЕРЕЙТИ К ПОЛЗУНКАМ</button>
+        </div>
     </div>
 
     <script>
-        async function send() {
-            const input = document.getElementById('user-input');
-            const box = document.getElementById('chat-box');
+        const tg = window.Telegram.WebApp;
+        tg.expand();
+
+        function switchTab(id) {
+            document.querySelectorAll('.content-area').forEach(a => a.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            event.target.classList.add('active');
+            tg.HapticFeedback.impactOccurred('light');
+        }
+
+        async function callAI() {
+            const input = document.getElementById('user-q');
+            const box = document.getElementById('msg-box');
             if(!input.value) return;
 
             const text = input.value;
             input.value = '';
-
-            // Добавляем сообщение пользователя
             box.innerHTML += `<div class="msg user">${text}</div>`;
             box.scrollTop = box.scrollHeight;
 
-            // Сигнал в n8n (нашего Майка-VILAVI)
             try {
-                const response = await fetch('http://85.209.132.81:5678/webhook/mike-hub', {
+                // Сигнал в n8n
+                fetch('http://85.209.132.81:5678/webhook/mike-hub', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({ command: 'expert_q', value: text, source: 'web_chat' })
+                    body: JSON.stringify({ command: 'expert_q', value: text, source: 'web_hub' })
                 });
                 
-                // В финальной версии мы будем получать ответ от n8n прямо сюда.
-                // Пока добавим имитацию ожидания
-                box.innerHTML += `<div class="msg bot"><i>Майк изучает документы... Ответ придет в Telegram.</i></div>`;
+                box.innerHTML += `<div class="msg bot"><i>Майк думает... Ответ придет в Telegram.</i></div>`;
             } catch (e) {
-                box.innerHTML += `<div class="msg bot" style="color: #ef4444;">Ошибка связи с сервером.</div>`;
+                box.innerHTML += `<div class="msg bot">Ошибка связи.</div>`;
             }
             box.scrollTop = box.scrollHeight;
         }
