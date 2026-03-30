@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Дмитрий Лаевский | VILAVI</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        :root { --bg: #05080f; --card: rgba(30, 41, 59, 0.7); --accent: #ef4444; --text: #f8fafc; --blue: #3b82f6; --gold: #fbbf24; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 16px; line-height: 1.6; }
+        .back-btn { background: rgba(255,255,255,0.05); border: none; color: white; padding: 10px 15px; border-radius: 12px; cursor: pointer; margin-bottom: 20px; font-weight: bold; display: inline-flex; align-items: center; gap: 8px; }
+        .header { text-align: center; margin-bottom: 25px; }
+        .avatar { width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--gold)); margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; font-size: 48px; border: 3px solid var(--gold); }
+        h1 { margin: 0; font-size: 26px; background: linear-gradient(to right, #60a5fa, #f87171); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .role { color: var(--gold); font-weight: 700; font-size: 14px; margin-top: 5px; text-transform: uppercase; letter-spacing: 1.5px; }
+        .card { background: var(--card); border-radius: 20px; padding: 20px; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 15px; }
+        .section-title { font-size: 11px; text-transform: uppercase; color: #64748b; letter-spacing: 1.5px; margin: 15px 0 8px 5px; display: flex; align-items: center; gap: 8px; }
+        .section-title i { font-style: normal; font-size: 16px; }
+        .highlight { color: var(--gold); font-weight: 700; }
+        .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+        .stat-box { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); padding: 15px; border-radius: 15px; text-align: center; }
+        .stat-value { font-size: 20px; font-weight: 900; color: var(--blue); }
+        .stat-label { font-size: 10px; color: #94a3b8; text-transform: uppercase; margin-top: 5px; }
+        .timeline { border-left: 2px solid rgba(255,255,255,0.1); padding-left: 15px; margin-left: 5px; }
+        .timeline-item { position: relative; margin-bottom: 15px; }
+        .timeline-item::before { content: ''; position: absolute; left: -19px; top: 5px; width: 10px; height: 10px; background: var(--accent); border-radius: 50%; border: 2px solid var(--bg); }
+        .year { font-weight: 900; color: var(--gold); font-size: 12px; }
+        .quote { font-style: italic; color: #cbd5e1; padding: 15px; border-left: 3px solid var(--accent); background: rgba(239,68,68,0.05); border-radius: 0 12px 12px 0; margin: 10px 0; }
+        ul { margin: 8px 0; padding-left: 20px; }
+        li { margin-bottom: 6px; color: #cbd5e1; }
+        .badge { display: inline-block; background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3); color: var(--blue); padding: 4px 10px; border-radius: 20px; font-size: 10px; font-weight: 700; margin: 2px; }
+    </style>
+</head>
+<body>
+    <button class="back-btn" onclick="history.back()">← НАЗАД</button>
+
+    <div class="header">
+        <div class="avatar">DL</div>
+        <h1>Дмитрий Лаевский</h1>
+        <div class="role">Основатель и Президент VILAVI</div>
+    </div>
+
+    <div class="card">
+        <div class="section-title"><i>📊</i> Ключевая информация</div>
+        <div class="stat-grid">
+            <div class="stat-box">
+                <div class="stat-value">1993</div>
+                <div class="stat-label">Год старта в MLM</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value">2010</div>
+                <div class="stat-label">Основание VILAVI</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value">15+</div>
+                <div class="stat-label">Лет опыта</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value">39</div>
+                <div class="stat-label">Стран продаж</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="section-title"><i>🎯</i> Миссия и фокус</div>
+        <p>Первая в мире компания, занимающаяся <span class="highlight">митохондриальным здоровьем</span> и продлением активного долголетия (longevity). VILAVI разрабатывает продукты для восстановления работы митохондрий — "электростанций" наших клеток.</p>
+        <div style="margin-top: 15px;">
+            <span class="badge">Митохондрии</span>
+            <span class="badge">Longevity</span>
+            <span class="badge">LCHF</span>
+            <span class="badge">Wellness</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="section-title"><i>📈</i> Карьера и достижения</div>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="year">1993 — 2009</div>
+                <div>Сетевой бизнес с нуля, накопление опыта в MLM-индустрии, создание собственной сети ресторанов «Карт-Бланш Рестогруп», соучредительство сети бургерных «МясоROOB».</div>
+            </div>
+            <div class="timeline-item">
+                <div class="year">2010</div>
+                <div>Официальный запуск VILAVI 6 февраля в Новосибирске. Основание компании с акцентом на инновационные продукты для здоровья.</div>
+            </div>
+            <div class="timeline-item">
+                <div class="year">2014</div>
+                <div>Личный вызов: перенес инсульт, паралич, частичная потеря речи. Это изменило жизненный курс и привело к созданию продуктовой линейки Tayga8, нацеленной на восстановление клеток и энергии.</div>
+            </div>
+            <div class="timeline-item">
+                <div class="year">2016 — н.в.</div>
+                <div>Запуск более 50 продуктов, расширение в 39 стран, открытие производственных площадок в Сибири, Европе и Азии. Введение концепции митохондриального здоровья в массовый обиход.</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="section-title"><i>🏛️</i> Образование и экспертиза</div>
+        <ul>
+            <li><strong>МВА</strong> — классическое управленческое образование</li>
+            <li>Изучение успешных мировых MLM-проектов</li>
+            <li>Глубокий практический опыт в сетевом маркетинге с 1993 года</li>
+            <li>Экспертиза в области биохакинга и anti-age технологий</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <div class="section-title"><i>💡</i> Философия</div>
+        <div class="quote">"Мы не просто меняем пищевые привычки, мы меняем образ жизни и мышления."</div>
+        <p>Дмитрий Лаевский делает акцент на <span class="highlight">комплексном подходе</span>: продукты с максимальной биодоступностью, образовательные ресурсы (Vilavi.Wiki, BeMe, ChatMe) и маркетинг-план, который позволяет зарабатывать как новичкам, так и лидерам.</p>
+    </div>
+
+    <div class="card">
+        <div class="section-title"><i>🔗</i> Полезные ссылки</div>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+            <button class="back-btn" style="width:100%; text-align:left; margin:0;" onclick="tg.openLink('https://vilavi.wiki/laevskiydmitriy')">📖 Биография на Vilavi.Wiki</button>
+            <button class="back-btn" style="width:100%; text-align:left; margin:0;" onclick="tg.openLink('https://www.vilavi.com/Company')">🏢 О компании VILAVI</button>
+            <button class="back-btn" style="width:100%; text-align:left; margin:0;" onclick="tg.openLink('https://www.youtube.com/watch?v=szFRBxZOVfk')">▶️ История Вилави (видео)</button>
+        </div>
+    </div>
+
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.expand();
+        tg.ready();
+    </script>
+</body>
+</html>
