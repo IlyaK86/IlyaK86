@@ -3,92 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mike Hub v5.0 | Professional Edition</title>
+    <title>Президент VILAVI | Дмитрий Лаевский</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        :root { --bg: #05080f; --card: rgba(30, 41, 59, 0.85); --accent: #ef4444; --soft-blue: #3b82f6; --text: #f8fafc; }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 16px; overflow-x: hidden; }
-        .header h1 { font-size: 24px; text-align: center; background: linear-gradient(to right, #60a5fa, #f87171); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 15px 0; }
-        
-        .tab-container { display: flex; gap: 8px; margin-bottom: 20px; }
-        .tab { flex: 1; padding: 12px; border-radius: 12px; background: rgba(255,255,255,0.05); text-align: center; font-size: 13px; font-weight: bold; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); color: #94a3b8; }
-        .tab.active { background: var(--card); border-color: var(--soft-blue); color: var(--soft-blue); }
-        .tab.vilavi-active { border-color: var(--accent); color: var(--accent); }
-
-        .section { display: none; }
-        .section.active { display: flex; flex-direction: column; gap: 16px; }
-
-        .card { background: var(--card); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 20px; }
-        .label { font-size: 11px; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 12px; display: block; }
-        
-        .btn { width: 100%; padding: 16px; border-radius: 12px; border: none; font-weight: 700; color: white; cursor: pointer; transition: 0.2s; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 14px; }
-        .btn:active { transform: scale(0.97); opacity: 0.8; }
-        .btn-blue { background: linear-gradient(135deg, #3b82f6, #2563eb); }
-        .btn-red { background: linear-gradient(135deg, #dc2626, #ef4444); }
-        .btn-outline { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        
-        #status-bar { position: fixed; bottom: 0; left: 0; right: 0; padding: 10px; font-size: 10px; text-align: center; background: rgba(0,0,0,0.5); color: #475569; }
+        :root { --bg: #05080f; --card: rgba(30, 41, 59, 0.7); --accent: #ef4444; --text: #f8fafc; --blue: #3b82f6; --gold: #fbbf24; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 16px; line-height: 1.6; }
+        .header { text-align: center; margin-bottom: 25px; }
+        .avatar { width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--gold)); margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; font-size: 48px; border: 3px solid var(--gold); }
+        h1 { margin: 0; font-size: 26px; background: linear-gradient(to right, #60a5fa, #f87171); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .role { color: var(--gold); font-weight: 700; font-size: 14px; margin-top: 5px; text-transform: uppercase; letter-spacing: 1.5px; }
+        .card { background: var(--card); border-radius: 20px; padding: 20px; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 15px; }
+        .section-title { font-size: 11px; text-transform: uppercase; color: #64748b; letter-spacing: 1.5px; margin: 15px 0 8px 5px; display: flex; align-items: center; gap: 8px; }
+        .section-title i { font-style: normal; font-size: 16px; }
+        .highlight { color: var(--gold); font-weight: 700; }
+        .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+        .stat-box { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); padding: 15px; border-radius: 15px; text-align: center; }
+        .stat-value { font-size: 20px; font-weight: 900; color: var(--blue); }
+        .stat-label { font-size: 10px; color: #94a3b8; text-transform: uppercase; margin-top: 5px; }
+        .timeline { border-left: 2px solid rgba(255,255,255,0.1); padding-left: 15px; margin-left: 5px; }
+        .timeline-item { position: relative; margin-bottom: 15px; }
+        .timeline-item::before { content: ''; position: absolute; left: -19px; top: 5px; width: 10px; height: 10px; background: var(--accent); border-radius: 50%; border: 2px solid var(--bg); }
+        .year { font-weight: 900; color: var(--gold); font-size: 12px; }
+        .quote { font-style: italic; color: #cbd5e1; padding: 15px; border-left: 3px solid var(--accent); background: rgba(239,68,68,0.05); border-radius: 0 12px 12px 0; margin: 10px 0; }
+        ul { margin: 8px 0; padding-left: 20px; }
+        li { margin-bottom: 6px; color: #cbd5e1; }
+        .badge { display: inline-block; background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3); color: var(--blue); padding: 4px 10px; border-radius: 20px; font-size: 10px; font-weight: 700; margin: 2px; }
+        .back-btn { background: rgba(255,255,255,0.05); border: none; color: white; padding: 8px 12px; border-radius: 12px; cursor: pointer; margin-bottom: 20px; font-weight: bold; display: inline-flex; align-items: center; gap: 8px; font-size: 13px; }
+        .bottom-nav { display: flex; gap: 10px; margin-top: 20px; }
+        .bottom-nav button { flex: 1; }
     </style>
 </head>
 <body>
-    <div class="header"><h1>МАЙК ПОМОЩНИК</h1></div>
+    <button class="back-btn" onclick="history.back()">← НАЗАД</button>
 
-    <div class="tab-container">
-        <div id="t-main" class="tab active" onclick="showTab('main')">🤖 ГЛАВНАЯ</div>
-        <div id="t-vilavi" class="tab" onclick="showTab('vilavi')">🏆 VILAVI</div>
+    <div class="header">
+        <div class="avatar">DL</div>
+        <h1>Дмитрий Лаевский</h1>
+        <div class="role">Основатель и Президент VILAVI</div>
     </div>
 
-    <!-- MAIN SECTION -->
-    <div id="s-main" class="section active">
-        <div class="card">
-            <span class="label">Режим ассистента</span>
-            <button class="btn btn-blue" onclick="send('/context', 'work')">💼 РАБОЧИЙ РЕЖИМ</button>
-            <button class="btn btn-outline" onclick="send('/context', 'personal')">🏠 ЛИЧНЫЙ РЕЖИМ</button>
+    <div class="card">
+        <div class="section-title"><i>📊</i> Ключевая информация</div>
+        <div class="stat-grid">
+            <div class="stat-box">
+                <div class="stat-value">1993</div>
+                <div class="stat-label">Год старта в MLM</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value">2010</div>
+                <div class="stat-label">Основание VILAVI</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value">15+</div>
+                <div class="stat-label">Лет опыта</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value">39</div>
+                <div class="stat-label">Стран продаж</div>
+            </div>
         </div>
     </div>
 
-    <!-- VILAVI SECTION -->
-    <div id="s-vilavi" class="section">
-        <div class="card" style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(0,0,0,0)); border-color: rgba(239, 68, 68, 0.3);">
-            <span class="label" style="color:#ef4444;">Active Project</span>
-            <h2 style="margin: 5px 0;">VILAVI Business Tool</h2>
-            <p style="font-size: 13px; color: #94a3b8; margin-bottom: 20px;">Управление маркетингом, калькулятор и база знаний в одном месте.</p>
-            <button class="btn btn-red" onclick="view('vilavi_hub.html')">ОТКРЫТЬ СУПЕР-ХАБ 🚀</button>
-        </div>
-        <div class="card" style="background: rgba(239,68,68,0.05); border-color: rgba(239,68,68,0.2);">
-            <span class="label" style="color:#ef4444;">Управление</span>
-            <h2 style="margin: 5px 0;">Президент VILAVI</h2>
-            <p style="font-size: 13px; color: #94a3b8; margin-bottom: 20px;">Информация о Дмитрии Лаевском, основателе компании.</p>
-            <button class="btn btn-outline" onclick="view('president.html')">ПРОСМОТРЕТЬ ПРОФИЛЬ 👤</button>
+    <div class="card">
+        <div class="section-title"><i>🎯</i> Миссия и фокус</div>
+        <p>Первая в мире компания, занимающаяся <span class="highlight">митохондриальным здоровьем</span> и продлением активного долголетия (longevity). VILAVI разрабатывает продукты для восстановления работы митохондрий — "электростанций" наших клеток.</p>
+        <div style="margin-top: 15px;">
+            <span class="badge">Митохондрии</span>
+            <span class="badge">Longevity</span>
+            <span class="badge">LCHF</span>
+            <span class="badge">Wellness</span>
         </div>
     </div>
 
-    <div id="status-bar">Система активна. Связь с сервером установлена.</div>
+    <div class="card">
+        <div class="section-title"><i>📈</i> Карьера и достижения</div>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="year">1993 — 2009</div>
+                <div>Сетевой бизнес с нуля, накопление опыта в MLM-индустрии, создание собственной сети ресторанов «Карт-Бланш Рестогруп», соучредительство сети бургерных «МясоROOB».</div>
+            </div>
+            <div class="timeline-item">
+                <div class="year">2010</div>
+                <div>Официальный запуск VILAVI 6 февраля в Новосибирске. Основание компании с акцентом на инновационные продукты для здоровья.</div>
+            </div>
+            <div class="timeline-item">
+                <div class="year">2014</div>
+                <div>Личный вызов: перенес инсульт, паралич, частичная потеря речи. Это изменило жизненный курс и привело к созданию продуктовой линейки Tayga8, нацеленной на восстановление клеток и энергии.</div>
+            </div>
+            <div class="timeline-item">
+                <div class="year">2016 — н.в.</div>
+                <div>Запуск более 50 продуктов, расширение в 39 стран, открытие производственных площадок в Сибири, Европе и Азии. Введение концепции митохондриального здоровья в массовый обиход.</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="section-title"><i>🏛️</i> Образование и экспертиза</div>
+        <ul>
+            <li><strong>МВА</strong> — классическое управленческое образование</li>
+            <li>Изучение успешных мировых MLM-проектов</li>
+            <li>Глубокий практический опыт в сетевом маркетинге с 1993 года</li>
+            <li>Экспертиза в области биохакинга и anti-age технологий</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <div class="section-title"><i>💡</i> Философия</div>
+        <div class="quote">"Мы не просто меняем пищевые привычки, мы меняем образ жизни и мышления."</div>
+        <p>Дмитрий Лаевский делает акцент на <span class="highlight">комплексном подходе</span>: продукты с максимальной биодоступностью, образовательные ресурсы (Vilavi.Wiki, BeMe, ChatMe) и маркетинг-план, который позволяет зарабатывать как новичкам, так и лидерам.</p>
+    </div>
+
+    <div class="card">
+        <div class="section-title"><i>🔗</i> Полезные ссылки</div>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+            <button class="back-btn" style="width:100%; text-align:left; margin:0;" onclick="tg.openLink('https://vilavi.wiki/laevskiydmitriy')">📖 Биография на Vilavi.Wiki</button>
+            <button class="back-btn" style="width:100%; text-align:left; margin:0;" onclick="tg.openLink('https://www.vilavi.com/Company')">🏢 О компании VILAVI</button>
+            <button class="back-btn" style="width:100%; text-align:left; margin:0;" onclick="tg.openLink('https://www.youtube.com/watch?v=szFRBxZOVfk')">▶️ История Вилави (видео)</button>
+        </div>
+    </div>
+
+    <div class="bottom-nav">
+        <button class="btn btn-blue" onclick="view('vilavi_hub.html')">СУПЕР-ХАБ 🚀</button>
+    </div>
 
     <script>
         const tg = window.Telegram.WebApp;
         tg.expand();
         tg.ready();
 
-        function showTab(tab) {
-            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active', 'vilavi-active'));
-            document.getElementById('s-' + tab).classList.add('active');
-            const el = document.getElementById('t-' + tab);
-            el.classList.add('active');
-            if(tab === 'vilavi') el.classList.add('vilavi-active');
-        }
-
         function view(filename) {
             tg.HapticFeedback.impactOccurred('medium');
             window.location.href = filename;
-        }
-
-        function send(cmd, val) {
-            tg.HapticFeedback.notificationOccurred('success');
-            const img = new Image();
-            img.src = 'http://85.209.132.81:5678/webhook/mike-hub?command=' + cmd + '&value=' + val;
         }
     </script>
 </body>
